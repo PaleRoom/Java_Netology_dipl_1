@@ -11,10 +11,12 @@ import java.util.Scanner;
 public class TodoServer {
     Todos todos;
     int port;
+    Tasks allTasks;
 
     public TodoServer(int port, Todos todos) {
         this.port = port;
         this.todos = todos;
+        this.allTasks = new Tasks();
     }
 
     public void start() throws IOException {
@@ -46,13 +48,13 @@ public class TodoServer {
 
                 switch (type) {
                     case "ADD":
-                        todos.addTask(task);
+                        todos.addTask(task, allTasks.tasksList);
                         break;
                     case "REMOVE":
-                        todos.removeTask(task);
+                        todos.removeTask(task, allTasks.tasksList);
                         break;
                 }
-                String tasks = todos.getAllTasks();
+                String tasks = todos.getAllTasks(allTasks.tasksList);
                 out.println("_________________________________________");
                 out.println("Ваши задачи: " + tasks);
                 out.println("_________________________________________");
